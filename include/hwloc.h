@@ -737,6 +737,7 @@ union hwloc_obj_attr_u {
                       *   It may change during execution since some devices are able to
                       *   slow their PCI links down when idle.
                       */
+    unsigned linkwidth;
   } pcidev;
   /** \brief Bridge specific Object Attributes */
   struct hwloc_bridge_attr_s {

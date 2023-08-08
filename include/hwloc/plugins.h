@@ -585,7 +585,8 @@ HWLOC_DECLSPEC unsigned hwloc_pcidisc_find_cap(const unsigned char *config, unsi
  * Needs 20 bytes of EXP capability block starting at offset in the config space
  * for registers up to link status.
  */
-HWLOC_DECLSPEC int hwloc_pcidisc_find_linkspeed(const unsigned char *config, unsigned offset, float *linkspeed);
+HWLOC_DECLSPEC int hwloc_pcidisc_find_linkspeed(const unsigned char *config, unsigned offset, float *linkspeed,
+                                                unsigned *linkwidth);
 
 /** \brief Return the hwloc object type (PCI device or Bridge) for the given class and configuration space.
  *
