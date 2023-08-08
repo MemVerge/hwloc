@@ -176,6 +176,8 @@ hwloc_info_show_obj(hwloc_topology_t topology, hwloc_obj_t obj, const char *type
 	     prefix, obj->attr->pcidev.vendor_id, obj->attr->pcidev.device_id);
       if (obj->attr->pcidev.linkspeed)
 	printf("%s attr PCI linkspeed = %f GB/s\n", prefix, obj->attr->pcidev.linkspeed);
+      if (obj->attr->pcidev.linkwidth)
+	printf("%s attr PCI linkwidth = %u\n", prefix, obj->attr->pcidev.linkwidth);
       break;
     }
     switch (obj->attr->bridge.downstream_type) {
@@ -199,6 +201,8 @@ hwloc_info_show_obj(hwloc_topology_t topology, hwloc_obj_t obj, const char *type
 	   prefix, obj->attr->pcidev.vendor_id, obj->attr->pcidev.device_id);
     if (obj->attr->pcidev.linkspeed)
       printf("%s attr PCI linkspeed = %f GB/s\n", prefix, obj->attr->pcidev.linkspeed);
+    if (obj->attr->pcidev.linkwidth)
+      printf("%s attr PCI linkwidth = %u\n", prefix, obj->attr->pcidev.linkwidth);
     break;
   case HWLOC_OBJ_OS_DEVICE:
     printf("%s attr osdev type = %s\n", prefix, type);

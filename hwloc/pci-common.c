@@ -857,7 +857,7 @@ hwloc_pcidisc_find_cap(const unsigned char *config, unsigned cap)
 
 int
 hwloc_pcidisc_find_linkspeed(const unsigned char *config,
-			     unsigned offset, float *linkspeed)
+			     unsigned offset, float *linkspeed, unsigned *linkwidth)
 {
   unsigned linksta, speed, width;
   float lanespeed;
@@ -890,6 +890,7 @@ hwloc_pcidisc_find_linkspeed(const unsigned char *config,
 
   /* linkspeed in GB/s */
   *linkspeed = lanespeed * width / 8;
+  *linkwidth = width;
   return 0;
 }
 

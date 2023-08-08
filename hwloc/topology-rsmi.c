@@ -128,7 +128,7 @@ static int get_device_pci_info(uint32_t dv_ind, uint64_t *bdfid)
  * dv_ind    (IN) The device index
  * linkspeed (OUT) PCI link speed of GPU devices
  */
-static int get_device_pci_linkspeed(uint32_t dv_ind, float *linkspeed)
+static int get_device_pci_linkspeed(uint32_t dv_ind, float *linkspeed, unsigned *linkwidth)
 {
   rsmi_pcie_bandwidth_t bandwidth;
   uint64_t lanespeed_raw; // T/s
@@ -143,6 +143,7 @@ static int get_device_pci_linkspeed(uint32_t dv_ind, float *linkspeed)
   lanespeed = lanespeed_raw <= 5000000000 ? (lanespeed_raw * 8)/10 : (lanespeed_raw * 128)/130; // bits/s
   lanes = bandwidth.lanes[bandwidth.transfer_rate.current];
   *linkspeed = (lanespeed * lanes) / 8000000000; // GB/s
+  *linkwidth = lanes;
   return 0;
 }
 
@@ -366,7 +367,7 @@ hwloc_rsmi_discover(struct hwloc_backend *backend, struct hwloc_disc_status *dst
       func = bdfid & 0x7;
       parent = hwloc_pci_find_parent_by_busid(topology, domain, bus, device, func);
       if (parent && parent->type == HWLOC_OBJ_PCI_DEVICE)
-        get_device_pci_linkspeed(i, &parent->attr->pcidev.linkspeed);
+        get_device_pci_linkspeed(i, &parent->attr->pcidev.linkspeed, &parent->attr->pcidev.linkwidth);
       if (!parent)
         parent = hwloc_get_root_obj(topology);
     }

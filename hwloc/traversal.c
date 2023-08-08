@@ -658,12 +658,15 @@ hwloc_obj_attr_snprintf(char * __hwloc_restrict string, size_t size, hwloc_obj_t
       /* upstream is PCI or HOST */
       if (obj->attr->bridge.upstream_type == HWLOC_OBJ_BRIDGE_PCI) {
         char linkspeed[64]= "";
+        char linkwidth[64]= "";       
         if (obj->attr->pcidev.linkspeed)
           snprintf(linkspeed, sizeof(linkspeed), "%slink=%.2fGB/s", separator, obj->attr->pcidev.linkspeed);
-	snprintf(up, sizeof(up), "busid=%04x:%02x:%02x.%01x%sid=%04x:%04x%sclass=%04x(%s)%s",
+        if (obj->attr->pcidev.linkwidth)
+          snprintf(linkwidth, sizeof(linkwidth), "%swidth=%u", separator, obj->attr->pcidev.linkwidth);
+	snprintf(up, sizeof(up), "busid=%04x:%02x:%02x.%01x%sid=%04x:%04x%sclass=%04x(%s)%s%s",
 		 obj->attr->pcidev.domain, obj->attr->pcidev.bus, obj->attr->pcidev.dev, obj->attr->pcidev.func, separator,
 		 obj->attr->pcidev.vendor_id, obj->attr->pcidev.device_id, separator,
-		 obj->attr->pcidev.class_id, hwloc_pci_class_string(obj->attr->pcidev.class_id), linkspeed);
+		 obj->attr->pcidev.class_id, hwloc_pci_class_string(obj->attr->pcidev.class_id), linkspeed, linkwidth);
       } else
         *up = '\0';
       /* downstream is_PCI */
@@ -681,12 +684,15 @@ hwloc_obj_attr_snprintf(char * __hwloc_restrict string, size_t size, hwloc_obj_t
   case HWLOC_OBJ_PCI_DEVICE:
     if (verbose) {
       char linkspeed[64]= "";
+      char linkwidth[64]= "";       
       if (obj->attr->pcidev.linkspeed)
         snprintf(linkspeed, sizeof(linkspeed), "%slink=%.2fGB/s", separator, obj->attr->pcidev.linkspeed);
-      res = hwloc_snprintf(string, size, "busid=%04x:%02x:%02x.%01x%sid=%04x:%04x%sclass=%04x(%s)%s",
+      if (obj->attr->pcidev.linkwidth)
+        snprintf(linkwidth, sizeof(linkwidth), "%swidth=%u", separator, obj->attr->pcidev.linkwidth);
+      res = hwloc_snprintf(string, size, "busid=%04x:%02x:%02x.%01x%sid=%04x:%04x%sclass=%04x(%s)%s%s",
 			   obj->attr->pcidev.domain, obj->attr->pcidev.bus, obj->attr->pcidev.dev, obj->attr->pcidev.func, separator,
 			   obj->attr->pcidev.vendor_id, obj->attr->pcidev.device_id, separator,
-			   obj->attr->pcidev.class_id, hwloc_pci_class_string(obj->attr->pcidev.class_id), linkspeed);
+			   obj->attr->pcidev.class_id, hwloc_pci_class_string(obj->attr->pcidev.class_id), linkspeed, linkwidth);
     }
     break;
   default:

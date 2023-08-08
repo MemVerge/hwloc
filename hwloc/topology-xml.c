@@ -332,6 +332,21 @@ hwloc__xml_import_object_attr(struct hwloc_topology *topology,
     }
   }
 
+  else if (!strcmp(name, "pci_link_width")) {
+    switch (obj->type) {
+    case HWLOC_OBJ_PCI_DEVICE:
+    case HWLOC_OBJ_BRIDGE: {
+      obj->attr->pcidev.linkwidth = (unsigned) atoi(value);
+      break;
+    }
+    default:
+      if (hwloc__xml_verbose())
+	fprintf(stderr, "%s: ignoring pci_link_width attribute for non-PCI object\n",
+		state->global->msgprefix);
+      break;
+    }
+  }
+
   else if (!strcmp(name, "bridge_type")) {
     switch (obj->type) {
     case HWLOC_OBJ_BRIDGE: {
@@ -2213,6 +2228,10 @@ hwloc__xml_export_object_contents (hwloc__xml_export_state_t state, hwloc_topolo
     state->new_prop(state, "pci_type", tmp);
     sprintf(tmp, "%f", obj->attr->pcidev.linkspeed);
     state->new_prop(state, "pci_link_speed", tmp);
+    if (obj->attr->pcidev.linkwidth > 0) {
+      sprintf(tmp, "%u", obj->attr->pcidev.linkwidth);
+      state->new_prop(state, "pci_link_width", tmp);
+    }
     break;
   case HWLOC_OBJ_OS_DEVICE:
     if (v2export && obj->attr->osdev.type == HWLOC_OBJ_OSDEV_MEMORY)

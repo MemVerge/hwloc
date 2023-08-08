@@ -310,10 +310,11 @@ hwloc_look_pci(struct hwloc_backend *backend, struct hwloc_disc_status *dstatus)
     }
 
     obj->attr->pcidev.linkspeed = 0; /* unknown */
+    obj->attr->pcidev.linkwidth = 0; /* unknown */
     offset = hwloc_pcidisc_find_cap(config_space_cache, PCI_CAP_ID_EXP);
 
     if (offset > 0 && offset + 20 /* size of PCI express block up to link status */ <= CONFIG_SPACE_CACHESIZE) {
-      hwloc_pcidisc_find_linkspeed(config_space_cache, offset, &obj->attr->pcidev.linkspeed);
+      hwloc_pcidisc_find_linkspeed(config_space_cache, offset, &obj->attr->pcidev.linkspeed, &obj->attr->pcidev.linkwidth);
 #ifdef HWLOC_LINUX_SYS
     } else {
       /* if not available from config-space (extended part is root-only), look in Linux sysfs files added in 4.13 */
@@ -342,6 +343,7 @@ hwloc_look_pci(struct hwloc_backend *backend, struct hwloc_disc_status *dstatus)
 	  width = atoi(value);
       }
       obj->attr->pcidev.linkspeed = speed*width/8;
+      obj->attr->pcidev.linkwidth = width;
 #endif
     }
 

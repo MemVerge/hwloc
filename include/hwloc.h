@@ -685,6 +685,7 @@ union hwloc_obj_attr_u {
     unsigned short vendor_id, device_id, subvendor_id, subdevice_id;
     unsigned char revision;
     float linkspeed; /* in GB/s */
+    unsigned linkwidth;
   } pcidev;
   /** \brief Bridge specific Object Attributes */
   struct hwloc_bridge_attr_s {

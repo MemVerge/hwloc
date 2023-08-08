@@ -71,7 +71,7 @@
     </object>
     <object type="Bridge" gp_index="44" id="obj44" bridge_type="0-1" depth="0" bridge_pci="0000:[00-00]">
       <object type="PCIDev" gp_index="28" id="obj28" pci_busid="0000:00:01.0" pci_type="0300 [1234:1111] [1af4:1100] 02 00" pci_link_speed="0.000000"/>
-      <object type="PCIDev" gp_index="31" id="obj31" pci_busid="0000:00:02.0" pci_type="0200 [8086:10d3] [8086:0000] 00 00" pci_link_speed="0.250000">
+      <object type="PCIDev" gp_index="31" id="obj31" pci_busid="0000:00:02.0" pci_type="0200 [8086:10d3] [8086:0000] 00 00" pci_link_speed="0.250000" pci_link_width="1">
         <info name="PCIVendor" value="Intel Corporation"/>
         <info name="PCIDevice" value="82574L Gigabit Network Connection"/>
         <object type="OSDev" gp_index="49" id="obj49" name="enp0s2" osdev_type="2">
@@ -100,19 +100,19 @@
       </object>
     </object>
     <object type="Bridge" gp_index="45" id="obj45" bridge_type="0-1" depth="0" bridge_pci="0000:[0c-16]">
-      <object type="Bridge" gp_index="39" id="obj39" bridge_type="1-1" depth="1" bridge_pci="0000:[0d-16]" pci_busid="0000:0c:00.0" pci_type="0604 [8086:7075] [8086:0000] 00 00" pci_link_speed="0.250000">
+      <object type="Bridge" gp_index="39" id="obj39" bridge_type="1-1" depth="1" bridge_pci="0000:[0d-16]" pci_busid="0000:0c:00.0" pci_type="0604 [8086:7075] [8086:0000] 00 00" pci_link_speed="0.250000" pci_link_width="1">
         <info name="PCIVendor" value="Intel Corporation"/>
-        <object type="Bridge" gp_index="34" id="obj34" bridge_type="1-1" depth="2" bridge_pci="0000:[0e-16]" pci_busid="0000:0d:00.0" pci_type="0604 [19e5:a128] [0000:0000] 00 00" pci_link_speed="0.250000">
+        <object type="Bridge" gp_index="34" id="obj34" bridge_type="1-1" depth="2" bridge_pci="0000:[0e-16]" pci_busid="0000:0d:00.0" pci_type="0604 [19e5:a128] [0000:0000] 00 00" pci_link_speed="0.250000" pci_link_width="1">
           <info name="PCISlot" value="0"/>
           <info name="PCIVendor" value="Huawei Technologies Co., Ltd."/>
           <object type="Bridge" gp_index="38" id="obj38" bridge_type="1-1" depth="3" bridge_pci="0000:[0f-12]" pci_busid="0000:0e:00.0" pci_type="0604 [19e5:a129] [0000:0000] 00 00" pci_link_speed="0.000000">
             <info name="PCIVendor" value="Huawei Technologies Co., Ltd."/>
-            <object type="Bridge" gp_index="40" id="obj40" bridge_type="1-1" depth="4" bridge_pci="0000:[10-12]" pci_busid="0000:0f:00.0" pci_type="0604 [19e5:a128] [0000:0000] 00 00" pci_link_speed="0.250000">
+            <object type="Bridge" gp_index="40" id="obj40" bridge_type="1-1" depth="4" bridge_pci="0000:[10-12]" pci_busid="0000:0f:00.0" pci_type="0604 [19e5:a128] [0000:0000] 00 00" pci_link_speed="0.250000" pci_link_width="1">
               <info name="PCISlot" value="1"/>
               <info name="PCIVendor" value="Huawei Technologies Co., Ltd."/>
               <object type="Bridge" gp_index="33" id="obj33" bridge_type="1-1" depth="5" bridge_pci="0000:[11-11]" pci_busid="0000:10:00.0" pci_type="0604 [19e5:a129] [0000:0000] 00 00" pci_link_speed="0.000000">
                 <info name="PCIVendor" value="Huawei Technologies Co., Ltd."/>
-                <object type="PCIDev" gp_index="42" id="obj42" pci_busid="0000:11:00.0" pci_type="0502 [8086:0d93] [1af4:1100] 01 10" pci_link_speed="0.250000">
+                <object type="PCIDev" gp_index="42" id="obj42" pci_busid="0000:11:00.0" pci_type="0502 [8086:0d93] [1af4:1100] 01 10" pci_link_speed="0.250000" pci_link_width="1">
                   <info name="PCISlot" value="4"/>
                   <info name="PCIVendor" value="Intel Corporation"/>
                   <object type="OSDev" gp_index="52" id="obj52" name="mem2" subtype="CXLMem" osdev_type="6">
@@ -122,7 +122,7 @@
               </object>
               <object type="Bridge" gp_index="43" id="obj43" bridge_type="1-1" depth="5" bridge_pci="0000:[12-12]" pci_busid="0000:10:01.0" pci_type="0604 [19e5:a129] [0000:0000] 00 00" pci_link_speed="0.000000">
                 <info name="PCIVendor" value="Huawei Technologies Co., Ltd."/>
-                <object type="PCIDev" gp_index="25" id="obj25" pci_busid="0000:12:00.0" pci_type="0502 [8086:0d93] [1af4:1100] 01 10" pci_link_speed="0.250000">
+                <object type="PCIDev" gp_index="25" id="obj25" pci_busid="0000:12:00.0" pci_type="0502 [8086:0d93] [1af4:1100] 01 10" pci_link_speed="0.250000" pci_link_width="1">
                   <info name="PCISlot" value="5"/>
                   <info name="PCIVendor" value="Intel Corporation"/>
                   <object type="OSDev" gp_index="51" id="obj51" name="mem0" subtype="CXLMem" osdev_type="6">
@@ -134,12 +134,12 @@
           </object>
           <object type="Bridge" gp_index="29" id="obj29" bridge_type="1-1" depth="3" bridge_pci="0000:[13-16]" pci_busid="0000:0e:01.0" pci_type="0604 [19e5:a129] [0000:0000] 00 00" pci_link_speed="0.000000">
             <info name="PCIVendor" value="Huawei Technologies Co., Ltd."/>
-            <object type="Bridge" gp_index="27" id="obj27" bridge_type="1-1" depth="4" bridge_pci="0000:[14-16]" pci_busid="0000:13:00.0" pci_type="0604 [19e5:a128] [0000:0000] 00 00" pci_link_speed="0.250000">
+            <object type="Bridge" gp_index="27" id="obj27" bridge_type="1-1" depth="4" bridge_pci="0000:[14-16]" pci_busid="0000:13:00.0" pci_type="0604 [19e5:a128] [0000:0000] 00 00" pci_link_speed="0.250000" pci_link_width="1">
               <info name="PCISlot" value="2"/>
               <info name="PCIVendor" value="Huawei Technologies Co., Ltd."/>
               <object type="Bridge" gp_index="37" id="obj37" bridge_type="1-1" depth="5" bridge_pci="0000:[15-15]" pci_busid="0000:14:00.0" pci_type="0604 [19e5:a129] [0000:0000] 00 00" pci_link_speed="0.000000">
                 <info name="PCIVendor" value="Huawei Technologies Co., Ltd."/>
-                <object type="PCIDev" gp_index="30" id="obj30" pci_busid="0000:15:00.0" pci_type="0502 [8086:0d93] [1af4:1100] 01 10" pci_link_speed="0.250000">
+                <object type="PCIDev" gp_index="30" id="obj30" pci_busid="0000:15:00.0" pci_type="0502 [8086:0d93] [1af4:1100] 01 10" pci_link_speed="0.250000" pci_link_width="1">
                   <info name="PCISlot" value="6"/>
                   <info name="PCIVendor" value="Intel Corporation"/>
                   <object type="OSDev" gp_index="53" id="obj53" name="mem3" subtype="CXLMem" osdev_type="6">
@@ -149,7 +149,7 @@
               </object>
               <object type="Bridge" gp_index="32" id="obj32" bridge_type="1-1" depth="5" bridge_pci="0000:[16-16]" pci_busid="0000:14:01.0" pci_type="0604 [19e5:a129] [0000:0000] 00 00" pci_link_speed="0.000000">
                 <info name="PCIVendor" value="Huawei Technologies Co., Ltd."/>
-                <object type="PCIDev" gp_index="36" id="obj36" pci_busid="0000:16:00.0" pci_type="0502 [8086:0d93] [1af4:1100] 01 10" pci_link_speed="0.250000">
+                <object type="PCIDev" gp_index="36" id="obj36" pci_busid="0000:16:00.0" pci_type="0502 [8086:0d93] [1af4:1100] 01 10" pci_link_speed="0.250000" pci_link_width="1">
                   <info name="PCISlot" value="7"/>
                   <info name="PCIVendor" value="Intel Corporation"/>
                   <object type="OSDev" gp_index="50" id="obj50" name="mem1" subtype="CXLMem" osdev_type="6">

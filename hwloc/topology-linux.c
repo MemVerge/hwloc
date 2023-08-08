@@ -7301,6 +7301,7 @@ hwloc_linuxfs_pci_look_pcidevices(struct hwloc_backend *backend)
     attr->subvendor_id = 0;
     attr->subdevice_id = 0;
     attr->linkspeed = 0;
+    attr->linkwidth = 0;
 
     err = snprintf(path, sizeof(path), "/sys/bus/pci/devices/%s/vendor", dirent->d_name);
     if ((size_t) err < sizeof(path)
@@ -7328,7 +7329,7 @@ hwloc_linuxfs_pci_look_pcidevices(struct hwloc_backend *backend)
     /* try to get the link speed */
     offset = hwloc_pcidisc_find_cap(config_space_cache, HWLOC_PCI_CAP_ID_EXP);
     if (offset > 0 && offset + 20 /* size of PCI express block up to link status */ <= CONFIG_SPACE_CACHESIZE) {
-      hwloc_pcidisc_find_linkspeed(config_space_cache, offset, &attr->linkspeed);
+      hwloc_pcidisc_find_linkspeed(config_space_cache, offset, &attr->linkspeed, &attr->linkwidth);
     } else {
       /* if not available from config-space (extended part is root-only), look in sysfs files added in 4.13 */
       float speed = 0.f;
@@ -7342,6 +7343,7 @@ hwloc_linuxfs_pci_look_pcidevices(struct hwloc_backend *backend)
 	  && hwloc_read_path_by_length(path, value, sizeof(value), root_fd) > 0)
 	width = atoi(value);
       attr->linkspeed = speed*width/8;
+      attr->linkwidth = width;
     }
 
     hwloc_pcidisc_tree_insert_by_busid(&tree, obj);

@@ -261,6 +261,7 @@ hwloc_nvml_discover(struct hwloc_backend *backend, struct hwloc_disc_status *dst
 	if (lanespeed * maxwidth != 0.)
 	  /* we found the max link speed, replace the current link speed found by pci (or none) */
 	  parent->attr->pcidev.linkspeed = lanespeed * maxwidth / 8; /* GB/s */
+	  parent->attr->pcidev.linkwidth = maxwidth;
       }
 #endif
     }
