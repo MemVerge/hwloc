@@ -7040,7 +7040,6 @@ hwloc__get_firmware_dmi_memory_info_one(struct hwloc_topology *topology,
   unsigned i;
   struct hwloc_infos_s infos;
   hwloc_obj_t misc;
-  int foundinfo = 0;
 
   infos.array = NULL;
   infos.count = 0;
@@ -7069,22 +7068,18 @@ hwloc__get_firmware_dmi_memory_info_one(struct hwloc_topology *topology,
       if (i == header->manuf_str_num) {
 	if (check_dmi_entry(buffer+boff)) {
 	  hwloc__add_info(&infos, "Vendor", buffer+boff);
-	  foundinfo = 1;
 	}
       }	else if (i == header->serial_str_num) {
 	if (check_dmi_entry(buffer+boff)) {
 	  hwloc__add_info(&infos, "SerialNumber", buffer+boff);
-	  foundinfo = 1;
 	}
       } else if (i == header->asset_tag_str_num) {
 	if (check_dmi_entry(buffer+boff)) {
 	  hwloc__add_info(&infos, "AssetTag", buffer+boff);
-	  foundinfo = 1;
 	}
       } else if (i == header->part_num_str_num) {
 	if (check_dmi_entry(buffer+boff)) {
 	  hwloc__add_info(&infos, "PartNumber", buffer+boff);
-	  foundinfo = 1;
 	}
       } else if (i == header->dev_loc_str_num) {
 	if (check_dmi_entry(buffer+boff)) {
@@ -7115,11 +7110,6 @@ hwloc__get_firmware_dmi_memory_info_one(struct hwloc_topology *topology,
   }
 
 done:
-  if (!foundinfo) {
-    /* found no actual info about the device. if there's only location info, the slot may be empty */
-    goto out_with_infos;
-  }
-
   retbuf = dmi_memory_device_form_factor(header->ff);
   if (retbuf)
     hwloc__add_info(&infos, "FormFactor", retbuf);
