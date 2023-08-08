@@ -484,6 +484,54 @@
       <info name="Size" value="4194304"/>
       <info name="Rank" value="2"/>
     </object>
+    <object type="Misc" os_index="4" subtype="MemoryModule">
+      <info name="DeviceLocation" value="DIMM_A5 "/>
+      <info name="FormFactor" value="DIMM"/>
+      <info name="Type" value="DDR3"/>
+      <info name="Size" value="0"/>
+    </object>
+    <object type="Misc" os_index="5" subtype="MemoryModule">
+      <info name="DeviceLocation" value="DIMM_A6 "/>
+      <info name="FormFactor" value="DIMM"/>
+      <info name="Type" value="DDR3"/>
+      <info name="Size" value="0"/>
+    </object>
+    <object type="Misc" os_index="6" subtype="MemoryModule">
+      <info name="DeviceLocation" value="DIMM_A7 "/>
+      <info name="FormFactor" value="DIMM"/>
+      <info name="Type" value="DDR3"/>
+      <info name="Size" value="0"/>
+    </object>
+    <object type="Misc" os_index="7" subtype="MemoryModule">
+      <info name="DeviceLocation" value="DIMM_A8 "/>
+      <info name="FormFactor" value="DIMM"/>
+      <info name="Type" value="DDR3"/>
+      <info name="Size" value="0"/>
+    </object>
+    <object type="Misc" os_index="8" subtype="MemoryModule">
+      <info name="DeviceLocation" value="DIMM_A9 "/>
+      <info name="FormFactor" value="DIMM"/>
+      <info name="Type" value="DDR3"/>
+      <info name="Size" value="0"/>
+    </object>
+    <object type="Misc" os_index="9" subtype="MemoryModule">
+      <info name="DeviceLocation" value="DIMM_A10"/>
+      <info name="FormFactor" value="DIMM"/>
+      <info name="Type" value="DDR3"/>
+      <info name="Size" value="0"/>
+    </object>
+    <object type="Misc" os_index="10" subtype="MemoryModule">
+      <info name="DeviceLocation" value="DIMM_A11"/>
+      <info name="FormFactor" value="DIMM"/>
+      <info name="Type" value="DDR3"/>
+      <info name="Size" value="0"/>
+    </object>
+    <object type="Misc" os_index="11" subtype="MemoryModule">
+      <info name="DeviceLocation" value="DIMM_A12"/>
+      <info name="FormFactor" value="DIMM"/>
+      <info name="Type" value="DDR3"/>
+      <info name="Size" value="0"/>
+    </object>
     <object type="Misc" os_index="12" subtype="MemoryModule">
       <info name="DeviceLocation" value="DIMM_B1 "/>
       <info name="Vendor" value="00AD04B300AD"/>
@@ -527,6 +575,54 @@
       <info name="Type" value="DDR3"/>
       <info name="Size" value="4194304"/>
       <info name="Rank" value="2"/>
+    </object>
+    <object type="Misc" os_index="16" subtype="MemoryModule">
+      <info name="DeviceLocation" value="DIMM_B5 "/>
+      <info name="FormFactor" value="DIMM"/>
+      <info name="Type" value="DDR3"/>
+      <info name="Size" value="0"/>
+    </object>
+    <object type="Misc" os_index="17" subtype="MemoryModule">
+      <info name="DeviceLocation" value="DIMM_B6 "/>
+      <info name="FormFactor" value="DIMM"/>
+      <info name="Type" value="DDR3"/>
+      <info name="Size" value="0"/>
+    </object>
+    <object type="Misc" os_index="18" subtype="MemoryModule">
+      <info name="DeviceLocation" value="DIMM_B7 "/>
+      <info name="FormFactor" value="DIMM"/>
+      <info name="Type" value="DDR3"/>
+      <info name="Size" value="0"/>
+    </object>
+    <object type="Misc" os_index="19" subtype="MemoryModule">
+      <info name="DeviceLocation" value="DIMM_B8 "/>
+      <info name="FormFactor" value="DIMM"/>
+      <info name="Type" value="DDR3"/>
+      <info name="Size" value="0"/>
+    </object>
+    <object type="Misc" os_index="20" subtype="MemoryModule">
+      <info name="DeviceLocation" value="DIMM_B9 "/>
+      <info name="FormFactor" value="DIMM"/>
+      <info name="Type" value="DDR3"/>
+      <info name="Size" value="0"/>
+    </object>
+    <object type="Misc" os_index="21" subtype="MemoryModule">
+      <info name="DeviceLocation" value="DIMM_B10"/>
+      <info name="FormFactor" value="DIMM"/>
+      <info name="Type" value="DDR3"/>
+      <info name="Size" value="0"/>
+    </object>
+    <object type="Misc" os_index="22" subtype="MemoryModule">
+      <info name="DeviceLocation" value="DIMM_B11"/>
+      <info name="FormFactor" value="DIMM"/>
+      <info name="Type" value="DDR3"/>
+      <info name="Size" value="0"/>
+    </object>
+    <object type="Misc" os_index="23" subtype="MemoryModule">
+      <info name="DeviceLocation" value="DIMM_B12"/>
+      <info name="FormFactor" value="DIMM"/>
+      <info name="Type" value="DDR3"/>
+      <info name="Size" value="0"/>
     </object>
   </object>
   <distances2 type="NUMANode" nbobjs="2" kind="5" name="NUMALatency" indexing="os">
