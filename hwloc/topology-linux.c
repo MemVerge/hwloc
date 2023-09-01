@@ -7076,6 +7076,23 @@ struct hwloc_firmware_dmi_mem_device_header {
    */
   unsigned char attributes;
   unsigned char extended_size[4];
+  unsigned char configured_speed[2];
+  unsigned char min_voltage[2];
+  unsigned char max_voltage[2];
+  unsigned char configured_voltage[2];
+  unsigned char tech;
+  unsigned char mode_capability[2];
+  unsigned char firmware_version;
+  unsigned char manufacturer_id[2];
+  unsigned char product_id[2];
+  unsigned char controller_manufacturer_id[2];
+  unsigned char controller_product_id[2];
+  unsigned char non_volatile_size[8];
+  unsigned char volatile_size[8];
+  unsigned char cache_size[8];
+  unsigned char logical_size[8];
+  unsigned char extended_speed[4];
+  unsigned char extended_configured_speed[4];
 };
 
 static int check_dmi_entry(const char *buffer)
@@ -7203,6 +7220,56 @@ static int dmi_memory_device_rank(char *buffer, size_t len,
   return 0;
 }
 
+static int dmi_memory_device_total_width(char *buffer, size_t len,
+                                         const struct hwloc_firmware_dmi_mem_device_header *header)
+{
+  uint16_t code = *(uint16_t *)(header->tot_width);
+
+  if (code == 0xFFFF)
+    return -1;
+
+  snprintf(buffer, len, "%u", code);
+  return 0;
+}
+
+static int dmi_memory_device_data_width(char *buffer, size_t len,
+                                        const struct hwloc_firmware_dmi_mem_device_header *header)
+{
+  uint16_t code = *(uint16_t *)(header->dat_width);
+
+  if (code == 0xFFFF)
+    return -1;
+
+  snprintf(buffer, len, "%u", code);
+  return 0;
+}
+
+static int dmi_memory_device_speed(char *buffer, size_t len,
+                                   const struct hwloc_firmware_dmi_mem_device_header *header)
+{
+  uint16_t code = *(uint16_t *)(header->speed);
+
+  if (code == 0)
+    return -1;
+
+  if (code == 0xFFFF) {
+    uint32_t code2;
+
+    if (header->length < offsetof(struct hwloc_firmware_dmi_mem_device_header, extended_speed) + sizeof(header->extended_speed))
+      return -1;
+    
+    code2 = *(uint32_t *)(header->extended_size);
+
+    if (code2 == 0)
+      return -1;
+    
+    snprintf(buffer, len, "%u", code2);
+  } else {
+    snprintf(buffer, len, "%u", code);
+  }
+  return 0;
+}
+
 static int
 hwloc__get_firmware_dmi_memory_info_one(struct hwloc_topology *topology,
 					unsigned idx, const char *path, FILE *fd,
@@ -7296,6 +7363,14 @@ done:
     hwloc__add_info(&infos, "Size", buffer);
   if (!dmi_memory_device_rank(buffer, sizeof(buffer), header))
     hwloc__add_info(&infos, "Rank", buffer);
+  snprintf(buffer, sizeof(buffer), "0x%04x", *(uint16_t *)(header->phy_mem_handle));
+  hwloc__add_info(&infos, "ArrayHandle", buffer);
+  if (!dmi_memory_device_total_width(buffer, sizeof(buffer), header))
+    hwloc__add_info(&infos, "TotalWidth", buffer);
+  if (!dmi_memory_device_data_width(buffer, sizeof(buffer), header))
+    hwloc__add_info(&infos, "DataWidth", buffer);
+  if (!dmi_memory_device_speed(buffer, sizeof(buffer), header))
+    hwloc__add_info(&infos, "Speed", buffer);
 
   misc = hwloc_alloc_setup_object(topology, HWLOC_OBJ_MISC, idx);
   if (!misc)
@@ -7328,15 +7403,16 @@ hwloc__get_firmware_dmi_memory_info(struct hwloc_topology *topology,
   for(i=0; ; i++) {
     FILE *fd;
     struct hwloc_firmware_dmi_mem_device_header header;
-    int err;
+    size_t nread;
 
     snprintf(path, sizeof(path), "/sys/firmware/dmi/entries/17-%u/raw", i);
     fd = hwloc_fopen(path, "r", data->root_fd);
     if (!fd)
       break;
 
-    err = fread(&header, sizeof(header), 1, fd);
-    if (err != 1) {
+    /* allow reading less than sizeof(header) for the sake of older SMBIOS versions */
+    nread = fread(&header, 1, sizeof(header), fd);
+    if (nread < sizeof(header) && ferror(fd)) {
       fclose(fd);
       break;
     }
