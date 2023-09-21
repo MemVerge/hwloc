@@ -38,6 +38,7 @@
 #include <sys/syscall.h>
 #include <mntent.h>
 #include <stddef.h>
+#include <sys/statfs.h>
 
 struct hwloc_linux_backend_data_s {
   char *root_path; /* NULL if unused */
@@ -6059,6 +6060,97 @@ hwloc_linux_add_os_device(struct hwloc_backend *backend, struct hwloc_obj *pcide
   return obj;
 }
 
+static uint64_t hwloc_linux_get_osdev_available(const char *device_name) {
+    uint64_t avaliable_bytes = 0;
+
+    // Read /sys/block/ directory to get all the storage partition
+    char path[256];
+    snprintf(path, sizeof(path), "/sys/block/%s", device_name);
+
+    // Open the directory
+    DIR *dir = opendir(path);
+    if (dir == NULL) {
+        perror("opendir");
+        return 0;
+    }
+
+    // Find all partition under the subfolder of /sys/block/device, partition
+    // always with prefix 'device'
+    int num_devices = 0;
+    struct dirent *entry;
+    while ((entry = readdir(dir)) != NULL) {
+        if (strncmp(entry->d_name, device_name, strlen(device_name)) == 0) {
+            num_devices++;
+        }
+    }
+    // Count device it self to the list
+    num_devices++;  
+    // Allocate memory for the array of names
+    char **devices = (char **)malloc(num_devices * sizeof(char *));
+    if (devices == NULL) {
+        perror("malloc");
+        closedir(dir);
+        return 0;
+    }
+    // Reset the directory stream and read the names into the array
+    rewinddir(dir);
+    int index = 0;
+    while ((entry = readdir(dir)) != NULL) {
+        if (strncmp(entry->d_name, device_name, strlen(device_name)) == 0) {
+            devices[index] = strdup(entry->d_name);
+            if (devices[index] == NULL) {
+                perror("strdup");
+                closedir(dir);
+                for (int i = 0; i < index; i++) {
+                    free(devices[i]);
+                }
+                free(devices);
+                return 0;
+            }
+            index++;
+        }
+    }
+    // Add device itself
+    devices[index] = strdup(device_name);
+    // Close the directory
+    closedir(dir);
+
+    // Read /proc/mounts to find the partition -> mount point mapping
+    FILE *file = fopen("/proc/mounts", "r");
+    if (file == NULL) {
+        perror("fopen");
+        return 0;
+    }
+
+    char device[256];
+    char mount_point[256];
+    char rest_of_line[256];
+    // Iterate the array for all partitions, and add up avaliablity for each
+    for (int i = 0; i < num_devices; i++) {
+        char device_path[256] = "/dev/";
+        strcat(device_path, devices[i]);
+        fseek(file, 0, SEEK_SET);
+        while (fscanf(file, "%255s %255s", device, mount_point) == 2) {
+            // Skip current position to the end of the line
+            fscanf(file, "%255[^\n]", rest_of_line);
+            // Found the first mount point for this device
+            if (strcmp(device, device_path) == 0) {
+                struct statfs stat;
+                if (statfs(mount_point, &stat) == -1) {
+                    perror("statfs");
+                    return 0;
+                }
+                uint64_t availableSize = stat.f_frsize * stat.f_bavail;
+                avaliable_bytes += availableSize;
+                break;
+            }
+        }
+    }
+    fclose(file);
+
+    return avaliable_bytes;
+}
+
 static void
 hwloc_linuxfs_block_class_fillinfos(struct hwloc_backend *backend __hwloc_attribute_unused, int root_fd,
 				    struct hwloc_obj *obj, const char *osdevpath)
@@ -6086,6 +6178,10 @@ hwloc_linuxfs_block_class_fillinfos(struct hwloc_backend *backend __hwloc_attrib
     snprintf(line, sizeof(line), "%llu", value / 2);
     hwloc_obj_add_info(obj, "Size", line);
   }
+
+  uint64_t value = hwloc_linux_get_osdev_available(obj->name);
+  snprintf(line, sizeof(line), "%lu", value / 1024);
+  hwloc_obj_add_info(obj, "Avaliable", line);
 
   snprintf(path, sizeof(path), "%s/queue/hw_sector_size", osdevpath);
   if (hwloc_read_path_by_length(path, line, sizeof(line), root_fd) > 0) {

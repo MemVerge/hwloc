@@ -2109,9 +2109,9 @@ A Solaris-specific general processor type name, such as "i86pc".
 These info attributes are attached to OS device objects specified in parentheses.
 
 <dl>
-<dt>Vendor, Model, Revision, Size, SectorSize (Storage OS devices)</dt>
-<dd>The vendor and model names, revision, size (in KiB = 1024 bytes)
-and SectorSize (in bytes).
+<dt>Vendor, Model, Revision, Size, SectorSize, Avaliable (Storage OS devices)</dt>
+<dd>The vendor and model names, revision, size (in KiB = 1024 bytes), SectorSize 
+(in bytes), and avaliable (in KiB = 1024 bytes).
 </dd>
 <dt>LinuxDeviceID (Storage OS devices)</dt>
 <dd>The major/minor device number such as 8:0 of Linux device.
