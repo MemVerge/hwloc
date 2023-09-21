@@ -6140,7 +6140,7 @@ static uint64_t hwloc_linux_get_osdev_available(const char *device_name) {
                     perror("statfs");
                     return 0;
                 }
-                unsigned long long availableSize = stat.f_frsize * stat.f_bavail;
+                uint64_t availableSize = stat.f_frsize * stat.f_bavail;
                 avaliable_bytes += availableSize;
                 break;
             }
@@ -6179,8 +6179,8 @@ hwloc_linuxfs_block_class_fillinfos(struct hwloc_backend *backend __hwloc_attrib
     hwloc_obj_add_info(obj, "Size", line);
   }
 
-  unsigned long long value = hwloc_linux_get_osdev_available(obj->name);
-  snprintf(line, sizeof(line), "%llu", value);
+  uint64_t value = hwloc_linux_get_osdev_available(obj->name);
+  snprintf(line, sizeof(line), "%lu", value / 1024);
   hwloc_obj_add_info(obj, "Avaliable", line);
 
   snprintf(path, sizeof(path), "%s/queue/hw_sector_size", osdevpath);
