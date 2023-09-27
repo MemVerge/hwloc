@@ -7145,7 +7145,7 @@ static int dmi_memory_device_total_width(char *buffer, size_t len,
 {
   uint16_t code = *(uint16_t *)(header->tot_width);
 
-  if (code == 0xFFFF)
+  if (code == 0xFFFF || code == 0)
     return -1;
 
   snprintf(buffer, len, "%u", code);
@@ -7157,7 +7157,7 @@ static int dmi_memory_device_data_width(char *buffer, size_t len,
 {
   uint16_t code = *(uint16_t *)(header->dat_width);
 
-  if (code == 0xFFFF)
+  if (code == 0xFFFF || code == 0)
     return -1;
 
   snprintf(buffer, len, "%u", code);
