@@ -7181,7 +7181,7 @@ static int dmi_memory_device_speed(char *buffer, size_t len,
     code2 = *(uint32_t *)(header->extended_size);
 
     if (code2 == 0)
-       return -1;
+      return -1;
     
     snprintf(buffer, len, "%u", code2);
   } else {
